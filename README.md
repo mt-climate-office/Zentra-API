@@ -11,6 +11,13 @@ Python bindings to the Zentra Cloud REST API
 
 ### `get` functions
 
+## Testing
+This project uses [pytest](https://docs.pytest.org/en/latest/) for testing. To test, run:
+
+```bash
+python setup.py test
+```
+
 ## Setting up project
 Dependency and environment management is provided by [conda](https://conda.io/docs/) and is described in the [environment.yml] file. To build the environment, [install conda](https://conda.io/docs/user-guide/install/index.html) and simply run this from your console:
 

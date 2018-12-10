@@ -47,3 +47,8 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
+
+# Mac trash files
+.DS_Store*
+ehthumbs.db
+Icon?

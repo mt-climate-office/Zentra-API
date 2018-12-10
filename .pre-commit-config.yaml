@@ -1,0 +1,30 @@
+# Some checks to stop some human errors:
+# - checking in AWS secrets, private keys, and other suspicious patterns.
+# - ditto for suspicious files, like `.ssh`.
+# - prevent direct commit/push to master or production (enforce pull-request hygiene)
+#
+# To use:
+# - brew install pre-commit
+# - cd <git root>
+# - pre-commit install                       # protect commits
+# - pre-commit install --hook-type pre-push  # suspenders *and* belt
+
+repos:
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: autopep8-wrapper
+    -   id: check-json
+        files: \.(bowerrc|jshintrc|json)$
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: name-tests-test
+
+#-   id: md-to-rst
+#    name: Markdown to ReStructured Text
+#    description: Create an rst version of README.md to keep Python people happy.
+#    entry: pandoc --from=markdown --to=rst --output=README.rst README.md
+#    language: bash
+#

@@ -11,7 +11,7 @@ jobs:
       - run: python setup.py develop
       - run: python setup.py test
       - store_test_results:
-          path: test-results
+          path: ~/zentra/test-results
       - store_artifacts:
-          path: test-results
+          path: ~/zentra/test-results
           destination: tr1

@@ -1,7 +1,14 @@
 # Zentra-API
-Python bindings to the Zentra Cloud REST API
+The `zentra` package provides python bindings to the Zentra Cloud REST API.
 
 ## What is Zentra Cloud?
+
+## Installation
+The `zentra` package is not yet available on PyPI. Until then, install directly from Github using `pip`:
+
+```bash
+pip install git+https://github.com/mt-climate-office/Zentra-API
+```
 
 ## Usage
 

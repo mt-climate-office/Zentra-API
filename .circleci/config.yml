@@ -26,7 +26,7 @@ jobs:
 #      - run: pip install -e .
 #      - run: python setup.py develop
       - run: pip install pyscaffold
-      - run: pip install -e .
+      - run: pip install .
 #      - run: pip install requests
       - run: python -c 'import requests'
       - run: python setup.py test

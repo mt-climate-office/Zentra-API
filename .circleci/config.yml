@@ -12,7 +12,6 @@ jobs:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
-            cd ~/zentra
             ls
 #      - save_cache:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}

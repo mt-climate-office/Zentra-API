@@ -5,6 +5,10 @@ import requests
 request = ZentraToken().build(username=getenv("zentra_un"),
                               password=getenv("zentra_pw"))
 
+print(getenv("zentra_un"))
+
+print(getenv("zentra_pw"))
+
 print(request.request)
 
 print(Session().send(request.request).content)

@@ -11,7 +11,7 @@ print(Session().send(request.request).content)
 
 print(requests.get('https://api.github.com/events'))
 
-request = ZentraSettings().build(token=getenv("zentra_token"),
+request = ZentraSettings().build(token=ZentraToken(token=getenv("zentra_token")),
                                  station="06-00187")
 
 print(request.request)

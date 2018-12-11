@@ -23,7 +23,7 @@ jobs:
 #      - run: pipenv install
 #      - run: pipenv install -e .
 #      - run: pipenv run 'python setup.py test'
-      - run: pip install --find-links -e .
+      - run: pip install -e .
 #      - run: python setup.py develop
 #      - run: pip install pyscaffold
 #      - run: pip install .

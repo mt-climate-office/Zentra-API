@@ -28,8 +28,8 @@ jobs:
 #      - run: pip install pyscaffold
 #      - run: pip install .
 #      - run: pip install requests
-      - run: python -c 'import requests'
-      - run: echo $zentra_un
+#      - run: python -c 'import requests'
+      - run: python -c 'from os import getenv; print(getenv("zentra_un"))'
       - run: python setup.py test
       - store_test_results:
           path: test-results

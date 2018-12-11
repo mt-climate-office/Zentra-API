@@ -52,3 +52,6 @@ MANIFEST
 .DS_Store*
 ehthumbs.db
 Icon?
+
+Pipfile
+Pipfile.lock

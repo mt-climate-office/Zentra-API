@@ -1,5 +1,6 @@
 from os import getenv
 from zentra.api import *
+import requests
 
 request = ZentraToken().build(username=getenv("zentra_un"),
                               password=getenv("zentra_pw"))
@@ -7,3 +8,5 @@ request = ZentraToken().build(username=getenv("zentra_un"),
 print(request.request)
 
 print(Session().send(request.request))
+
+print(requests.get('https://api.github.com/events'))

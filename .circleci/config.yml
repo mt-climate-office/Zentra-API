@@ -8,28 +8,8 @@ jobs:
       - checkout
       - run: sudo chown -R circleci:circleci /usr/local/bin
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-#      - restore_cache:
-#          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-#      - run:
-#          command: |
-#            ls
-#      - save_cache:
-#          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-#          paths:
-#            - ".venv"
-#            - "/usr/local/bin"
-#            - "/usr/local/lib/python3.6/site-packages"
-#      - run: pip install pipenv
-#      - run: pipenv install
-#      - run: pipenv install -e .
-#      - run: pipenv run 'python setup.py test'
-      - run: pip install -e .
-#      - run: python setup.py develop
-#      - run: pip install pyscaffold
-#      - run: pip install .
-#      - run: pip install requests
-#      - run: python -c 'import requests'
-      - run: python -c 'from os import getenv; print(getenv("zentra_un"))'
+      - run: python setup.py develop
+      - run: sleep 5
       - run: python setup.py test
       - store_test_results:
           path: test-results

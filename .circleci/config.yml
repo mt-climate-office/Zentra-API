@@ -6,8 +6,8 @@ jobs:
       - image: circleci/python:3.7.1
     steps:
       - checkout
-#      - run: sudo chown -R circleci:circleci /usr/local/bin
-#      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
 #      - restore_cache:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
 #      - run:
@@ -19,10 +19,8 @@ jobs:
 #            - ".venv"
 #            - "/usr/local/bin"
 #            - "/usr/local/lib/python3.6/site-packages"
-      - run:
-          command: |
-            python setup.py install
-            python setup.py test
+      - run: python setup.py install
+      - run: python setup.py test
       - store_test_results:
           path: test-results
       - store_artifacts:

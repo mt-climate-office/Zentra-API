@@ -10,9 +10,9 @@ jobs:
 #      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
 #      - restore_cache:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run:
-          command: |
-            ls
+#      - run:
+#          command: |
+#            ls
 #      - save_cache:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
 #          paths:
@@ -21,7 +21,8 @@ jobs:
 #            - "/usr/local/lib/python3.6/site-packages"
       - run:
           command: |
-            pipenv run "python setup.py test"
+            python setup.py install
+            python setup.py test
       - store_test_results:
           path: test-results
       - store_artifacts:

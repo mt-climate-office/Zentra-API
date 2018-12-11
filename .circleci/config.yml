@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/Zentra-API
+    working_directory: ~/zentra
     docker:
       - image: circleci/python:3.7.1
     steps:
@@ -12,8 +12,8 @@ jobs:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install
+            cd ~/zentra
+            ls
 #      - save_cache:
 #          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
 #          paths:

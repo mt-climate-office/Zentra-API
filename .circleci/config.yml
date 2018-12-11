@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/zentra
+    working_directory: ~/Zentra-API
     docker:
       - image: circleci/python:3.7.1
     steps:

@@ -10,6 +10,7 @@ jobs:
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
       - run: python setup.py develop
       - run: sleep 5
+      - run: python connecct-test.py
       - run: python setup.py test
       - store_test_results:
           path: test-results

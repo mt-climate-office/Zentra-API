@@ -25,6 +25,7 @@ jobs:
 #      - run: pipenv run 'python setup.py test'
 #      - run: pip install -e .
       - run: python setup.py develop
+      - run: python -c 'import requests'
       - run: python setup.py test
       - store_test_results:
           path: test-results

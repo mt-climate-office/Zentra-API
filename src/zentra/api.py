@@ -275,8 +275,11 @@ class ZentraStatus:
 
         """
 
-        if username:
+        if station and token:
             self.get(station, token, start_time, end_time)
+        elif station or token:
+            raise Exception(
+                '"station" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -339,8 +342,12 @@ class ZentraStatus:
         Sends a token request to the Zentra API and parses the response.
         """
         # Send the request and get the JSON response
-        resp = Session().send(self.request). \
-            json()
+        resp = Session().send(self.request)
+        if resp.status_code != 200:
+            raise Exception(
+                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+
+        resp = resp.json()
 
         # parse the response
         self.device_info = resp['device']['device_info']
@@ -386,8 +393,11 @@ class ZentraReadings:
 
         """
 
-        if token:
+        if station and token:
             self.get(station, token, start_time, start_mrid)
+        elif station or token:
+            raise Exception(
+                '"station" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -450,8 +460,15 @@ class ZentraReadings:
         Sends a token request to the Zentra API and parses the response.
         """
         # Send the request and get the JSON response
-        resp = Session().send(self.request). \
-            json()
+        resp = Session().send(self.request)
+        if resp.status_code != 200:
+            raise Exception(
+                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+        elif str(resp.content) == str(b'{"Error": "Device serial number entered does not exitst"}'):
+            raise Exception(
+                'Error: Device serial number entered does not exist')
+
+        resp = resp.json()
 
         # parse the response
         self.device_info = resp['device']['device_info']

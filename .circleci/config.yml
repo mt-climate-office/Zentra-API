@@ -19,10 +19,12 @@ jobs:
 #            - ".venv"
 #            - "/usr/local/bin"
 #            - "/usr/local/lib/python3.6/site-packages"
-      - run: pip install pipenv
-      - run: pipenv install
-      - run: pipenv install -e .
-      - run: pipenv run 'python setup.py test'
+#      - run: pip install pipenv
+#      - run: pipenv install
+#      - run: pipenv install -e .
+#      - run: pipenv run 'python setup.py test'
+      - run: pip install -e .
+      - run: python setup.py test
       - store_test_results:
           path: test-results
       - store_artifacts:

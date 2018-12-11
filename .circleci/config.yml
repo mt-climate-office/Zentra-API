@@ -29,6 +29,7 @@ jobs:
 #      - run: pip install .
 #      - run: pip install requests
       - run: python -c 'import requests'
+      - run: echo $zentra_un
       - run: python setup.py test
       - store_test_results:
           path: test-results

@@ -19,7 +19,7 @@ jobs:
 #            - ".venv"
 #            - "/usr/local/bin"
 #            - "/usr/local/lib/python3.6/site-packages"
-      - run: python setup.py install
+      - run: pip install git+https://github.com/mt-climate-office/Zentra-API
       - run: python setup.py test
       - store_test_results:
           path: test-results

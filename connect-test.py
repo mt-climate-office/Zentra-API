@@ -7,6 +7,6 @@ request = ZentraToken().build(username=getenv("zentra_un"),
 
 print(request.request)
 
-print(Session().send(request.request))
+print(Session().send(request.request).content)
 
 print(requests.get('https://api.github.com/events'))

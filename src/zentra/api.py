@@ -150,8 +150,11 @@ class ZentraSettings:
 
         """
 
-        if username:
+        if station and token:
             self.get(station, token, start_time, end_time)
+        elif station or token:
+            raise Exception(
+                '"station" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -201,7 +204,8 @@ class ZentraSettings:
         """
         self.request = Request('GET',
                                url='https://zentracloud.com/api/v1/settings',
-                               headers={'Authorization': "Token " + token.token},
+                               headers={
+                                   'Authorization': "Token " + token.token},
                                params={'sn': station,
                                        'start_time': start_time,
                                        'end_time': end_time}).prepare()
@@ -213,17 +217,23 @@ class ZentraSettings:
         Sends a token request to the Zentra API and parses the response.
         """
         # Send the request and get the JSON response
-        resp = Session().send(self.request). \
-            json()
+        resp = Session().send(self.request)
+        if resp.status_code != 200:
+            raise Exception(
+                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+
+        resp = resp.json()
 
         # parse the response
         self.device_info = resp['device']['device_info']
-        self.measurement_settings = pd.DataFrame(resp['device']['measurement_settings'])
+        self.measurement_settings = pd.DataFrame(
+            resp['device']['measurement_settings'])
         self.time_settings = pd.DataFrame(resp['device']['locations'])
         self.locations = pd.DataFrame(resp['device']['locations'])
         resp['device']['installation_metadata'] = resp['device']['installation_metadata'][0]
         resp['device']['installation_metadata']['sensor_elevations'] = \
-            pd.DataFrame(resp['device']['installation_metadata']['sensor_elevations'])
+            pd.DataFrame(resp['device']['installation_metadata']
+                         ['sensor_elevations'])
         self.installation_metadata = resp['device']['installation_metadata']
 
         return self
@@ -316,7 +326,8 @@ class ZentraStatus:
         """
         self.request = Request('GET',
                                url='https://zentracloud.com/api/v1/statuses',
-                               headers={'Authorization': "Token " + token.token},
+                               headers={
+                                   'Authorization': "Token " + token.token},
                                params={'sn': station,
                                        'start_time': start_time,
                                        'end_time': end_time}).prepare()
@@ -336,7 +347,8 @@ class ZentraStatus:
         resp['device']['device_error_counters']['sensor_errors'] = pd.DataFrame(
             resp['device']['device_error_counters']['sensor_errors'])
         self.device_error_counters = resp['device']['device_error_counters']
-        self.cellular_statuses = pd.DataFrame(resp['device']['cellular_statuses'])
+        self.cellular_statuses = pd.DataFrame(
+            resp['device']['cellular_statuses'])
         self.cellular_error_counters = resp['device']['cellular_error_counters']
 
         return self
@@ -425,7 +437,8 @@ class ZentraReadings:
         """
         self.request = Request('GET',
                                url='https://zentracloud.com/api/v1/readings',
-                               headers={'Authorization': "Token " + token.token},
+                               headers={
+                                   'Authorization': "Token " + token.token},
                                params={'sn': station,
                                        'start_time': start_time,
                                        'start_mrid': start_mrid}).prepare()
@@ -442,7 +455,8 @@ class ZentraReadings:
 
         # parse the response
         self.device_info = resp['device']['device_info']
-        self.timeseries = list(map(lambda x: ZentraTimeseriesRecord(x), resp['device']['timeseries']))
+        self.timeseries = list(
+            map(lambda x: ZentraTimeseriesRecord(x), resp['device']['timeseries']))
 
         return self
 
@@ -484,14 +498,14 @@ class ZentraTimeseriesRecord:
 
         vals.columns = \
             (
-                    ['datetime', 'mrid', 'unknown'] +
-                    list(
-                        str(s)
-                        for s
-                        in list(
-                            range(1, vals.columns.max() - 1)
-                        )
+                ['datetime', 'mrid', 'unknown'] +
+                list(
+                    str(s)
+                    for s
+                    in list(
+                        range(1, vals.columns.max() - 1)
                     )
+                )
             )
 
         self.values = pd.concat(
@@ -504,7 +518,8 @@ class ZentraTimeseriesRecord:
                                        mrid=x['mrid'],
                                        unknown=x['unknown'],
                                        port=x['port']) >>
-                                select(X.datetime, X.mrid, X.unknown, X.port, everything())
+                                select(X.datetime, X.mrid, X.unknown,
+                                       X.port, everything())
                                 ),
                      axis=1).tolist()
         )

@@ -8,13 +8,6 @@ This script requires that `requests` and `pandas` be installed within the Python
 environment you are running this script in. All API calls are returned
 as python dictionaries with nested pandas dataframes.
 
-This module contains the following functions:
-
-    * get_token - returns the a user access token given a username and password
-    * get_station_settings - returns the settings for a given station
-    * get_station_status - returns the status for a given station
-    * get_station_readings - returns the readings for a given station
-
 """
 
 from requests import Session, Request
@@ -114,7 +107,7 @@ class ZentraToken:
 
 class ZentraSettings:
     """
-    A class used to represent a station's settings
+    A class used to represent a device's settings
 
     Attributes
     ----------
@@ -133,14 +126,14 @@ class ZentraSettings:
 
     """
 
-    def __init__(self, station=None, token=None, start_time=None, end_time=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None):
         """
-        Gets a station settings using a GET request to the Zentra API.
+        Gets a device settings using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -150,11 +143,11 @@ class ZentraSettings:
 
         """
 
-        if station and token:
-            self.get(station, token, start_time, end_time)
-        elif station or token:
+        if sn and token:
+            self.get(sn, token, start_time, end_time)
+        elif sn or token:
             raise Exception(
-                '"station" and "token" parameters must both be included.')
+                '"sn" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -164,15 +157,15 @@ class ZentraSettings:
             self.locations = None
             self.installation_metadata = None
 
-    def get(self, station, token, start_time=None, end_time=None):
+    def get(self, sn, token, start_time=None, end_time=None):
         """
-        Gets a station settings using a GET request to the Zentra API.
+        Gets a device settings using a GET request to the Zentra API.
         Wraps build and parse functions.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -181,19 +174,19 @@ class ZentraSettings:
             Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
 
         """
-        self.build(station, token, start_time, end_time)
+        self.build(sn, token, start_time, end_time)
         self.parse()
 
         return self
 
-    def build(self, station, token, start_time=None, end_time=None):
+    def build(self, sn, token, start_time=None, end_time=None):
         """
-        Gets a station settings using a GET request to the Zentra API.
+        Gets a device settings using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -206,7 +199,7 @@ class ZentraSettings:
                                url='https://zentracloud.com/api/v1/settings',
                                headers={
                                    'Authorization': "Token " + token.token},
-                               params={'sn': station,
+                               params={'sn': sn,
                                        'start_time': start_time,
                                        'end_time': end_time}).prepare()
 
@@ -220,7 +213,7 @@ class ZentraSettings:
         resp = Session().send(self.request)
         if resp.status_code != 200:
             raise Exception(
-                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+                'Incorrectly formatted request. Please ensure the user token and device serial number are correct.')
 
         resp = resp.json()
 
@@ -228,7 +221,7 @@ class ZentraSettings:
         self.device_info = resp['device']['device_info']
         self.measurement_settings = pd.DataFrame(
             resp['device']['measurement_settings'])
-        self.time_settings = pd.DataFrame(resp['device']['locations'])
+        self.time_settings = pd.DataFrame(resp['device']['time_settings'])
         self.locations = pd.DataFrame(resp['device']['locations'])
         resp['device']['installation_metadata'] = resp['device']['installation_metadata'][0]
         resp['device']['installation_metadata']['sensor_elevations'] = \
@@ -241,7 +234,7 @@ class ZentraSettings:
 
 class ZentraStatus:
     """
-    A class used to represent a station's status
+    A class used to represent a device's status
 
     Attributes
     ----------
@@ -258,14 +251,14 @@ class ZentraStatus:
 
     """
 
-    def __init__(self, station=None, token=None, start_time=None, end_time=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None):
         """
-        Gets a station status using a GET request to the Zentra API.
+        Gets a device status using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -275,11 +268,11 @@ class ZentraStatus:
 
         """
 
-        if station and token:
-            self.get(station, token, start_time, end_time)
-        elif station or token:
+        if sn and token:
+            self.get(sn, token, start_time, end_time)
+        elif sn or token:
             raise Exception(
-                '"station" and "token" parameters must both be included.')
+                '"sn" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -289,15 +282,15 @@ class ZentraStatus:
             self.locations = None
             self.installation_metadata = None
 
-    def get(self, station, token, start_time=None, end_time=None):
+    def get(self, sn, token, start_time=None, end_time=None):
         """
-        Gets a station status using a GET request to the Zentra API.
+        Gets a device status using a GET request to the Zentra API.
         Wraps build and parse functions.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -306,19 +299,19 @@ class ZentraStatus:
             Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
 
         """
-        self.build(station, token, start_time, end_time)
+        self.build(sn, token, start_time, end_time)
         self.parse()
 
         return self
 
-    def build(self, station, token, start_time=None, end_time=None):
+    def build(self, sn, token, start_time=None, end_time=None):
         """
-        Gets a station status using a GET request to the Zentra API.
+        Gets a device status using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -331,7 +324,7 @@ class ZentraStatus:
                                url='https://zentracloud.com/api/v1/statuses',
                                headers={
                                    'Authorization': "Token " + token.token},
-                               params={'sn': station,
+                               params={'sn': sn,
                                        'start_time': start_time,
                                        'end_time': end_time}).prepare()
 
@@ -345,7 +338,7 @@ class ZentraStatus:
         resp = Session().send(self.request)
         if resp.status_code != 200:
             raise Exception(
-                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+                'Incorrectly formatted request. Please ensure the user token and device serial number are correct.')
 
         resp = resp.json()
 
@@ -363,7 +356,7 @@ class ZentraStatus:
 
 class ZentraReadings:
     """
-    A class used to represent a station's readings
+    A class used to represent a device's readings
 
     Attributes
     ----------
@@ -376,14 +369,14 @@ class ZentraReadings:
 
     """
 
-    def __init__(self, station=None, token=None, start_time=None, start_mrid=None):
+    def __init__(self, sn=None, token=None, start_time=None, start_mrid=None):
         """
-        Gets a station readings using a GET request to the Zentra API.
+        Gets a device readings using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -393,11 +386,11 @@ class ZentraReadings:
 
         """
 
-        if station and token:
-            self.get(station, token, start_time, start_mrid)
-        elif station or token:
+        if sn and token:
+            self.get(sn, token, start_time, start_mrid)
+        elif sn or token:
             raise Exception(
-                '"station" and "token" parameters must both be included.')
+                '"sn" and "token" parameters must both be included.')
         else:
             # build an empty ZentraToken
             self.request = None
@@ -407,15 +400,15 @@ class ZentraReadings:
             self.locations = None
             self.installation_metadata = None
 
-    def get(self, station, token, start_time=None, start_mrid=None):
+    def get(self, sn, token, start_time=None, start_mrid=None):
         """
-        Gets a station readings using a GET request to the Zentra API.
+        Gets a device readings using a GET request to the Zentra API.
         Wraps build and parse functions.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -424,19 +417,19 @@ class ZentraReadings:
             Return readings with mrid ≥ start_mrid.
 
         """
-        self.build(station, token, start_time, start_mrid)
+        self.build(sn, token, start_time, start_mrid)
         self.parse()
 
         return self
 
-    def build(self, station, token, start_time=None, start_mrid=None):
+    def build(self, sn, token, start_time=None, start_mrid=None):
         """
-        Gets a station readings using a GET request to the Zentra API.
+        Gets a device readings using a GET request to the Zentra API.
 
         Parameters
         ----------
-        station : str
-            The serial number of the station
+        sn : str
+            The serial number of the device
         token : ZentraToken
             The user's access token
         start_time : int, optional
@@ -449,7 +442,7 @@ class ZentraReadings:
                                url='https://zentracloud.com/api/v1/readings',
                                headers={
                                    'Authorization': "Token " + token.token},
-                               params={'sn': station,
+                               params={'sn': sn,
                                        'start_time': start_time,
                                        'start_mrid': start_mrid}).prepare()
 
@@ -463,7 +456,7 @@ class ZentraReadings:
         resp = Session().send(self.request)
         if resp.status_code != 200:
             raise Exception(
-                'Incorrectly formatted request. Please ensure the user token and station serial number are correct.')
+                'Incorrectly formatted request. Please ensure the user token and device serial number are correct.')
         elif str(resp.content) == str(b'{"Error": "Device serial number entered does not exitst"}'):
             raise Exception(
                 'Error: Device serial number entered does not exist')
@@ -500,7 +493,7 @@ class ZentraTimeseriesRecord:
         Parameters
         ----------
         configuration : dictionary
-            A Zentra conficuration record returned as part of a ZentraReadings API call.
+            A Zentra configuration record returned as part of a ZentraReadings API call.
 
         """
         self.valid_since = configuration['configuration']['valid_since']

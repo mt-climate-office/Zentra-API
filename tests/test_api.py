@@ -51,34 +51,34 @@ def test_settings_token_only():
         ZentraSettings(token=token)
 
 
-def test_settings_missing_station():
+def test_settings_missing_sn():
     with pytest.raises(Exception):
-        ZentraSettings(token=token, station="06-12345")
+        ZentraSettings(token=token, sn="06-12345")
 
 
 def test_settings_correct_init():
     assert ZentraSettings(
-        token=token, station="06-00187").device_info is not None
+        token=token, sn="06-00187").device_info is not None
 
 
 def test_settings_build():
     assert ZentraSettings().build(token=token,
-                                  station="06-00187").request is not None
+                                  sn="06-00187").request is not None
 
 
 def test_settings_request():
     assert Session().send(ZentraSettings().build(token=token,
-                                                 station="06-00187").request).status_code == 200
+                                                 sn="06-00187").request).status_code == 200
 
 
 def test_settings_parse():
     assert ZentraSettings().build(token=token,
-                                  station="06-00187").parse().device_info['device_sn'] == "06-00187"
+                                  sn="06-00187").parse().device_info['device_sn'] == "06-00187"
 
 
 def test_settings_get():
     assert ZentraSettings().get(token=token,
-                                station="06-00187").device_info['device_sn'] == "06-00187"
+                                sn="06-00187").device_info['device_sn'] == "06-00187"
 
 
 def test_status_empty():
@@ -90,35 +90,35 @@ def test_status_token_only():
         ZentraStatus(token=token)
 
 
-def test_status_missing_station():
+def test_status_missing_sn():
     with pytest.raises(Exception):
         ZentraStatus(token=token,
-                     station="06-12345")
+                     sn="06-12345")
 
 
 def test_status_correct_init():
     assert ZentraStatus(token=token,
-                        station="06-00187").device_info is not None
+                        sn="06-00187").device_info is not None
 
 
 def test_status_build():
     assert ZentraStatus().build(token=token,
-                                station="06-00187").request is not None
+                                sn="06-00187").request is not None
 
 
 def test_status_request():
     assert Session().send(ZentraStatus().build(token=token,
-                                               station="06-00187").request).status_code == 200
+                                               sn="06-00187").request).status_code == 200
 
 
 def test_status_parse():
     assert ZentraStatus().build(token=token,
-                                station="06-00187").parse().device_info['device_sn'] == "06-00187"
+                                sn="06-00187").parse().device_info['device_sn'] == "06-00187"
 
 
 def test_status_get():
     assert ZentraStatus().get(token=token,
-                              station="06-00187").device_info['device_sn'] == "06-00187"
+                              sn="06-00187").device_info['device_sn'] == "06-00187"
 
 
 def test_readings_empty():
@@ -130,17 +130,17 @@ def test_readings_token_only():
         ZentraReadings(token=token)
 
 
-def test_readings_missing_station():
+def test_readings_missing_sn():
     with pytest.raises(Exception):
         ZentraReadings(token=token,
-                       station="06-12345",
+                       sn="06-12345",
                        start_time=yesterday)
 
 
 def test_readings_wrong_token():
     with pytest.raises(Exception):
         ZentraReadings(token=ZentraToken(token="blah"),
-                       station="06-00187",
+                       sn="06-00187",
                        start_time=yesterday)
 
 
@@ -149,31 +149,31 @@ yesterday = int((datetime.today() - timedelta(1)).timestamp())
 
 def test_readings_correct_init():
     assert ZentraReadings(token=token,
-                          station="06-00187",
+                          sn="06-00187",
                           start_time=yesterday).device_info is not None
 
 
 def test_readings_build():
     assert ZentraReadings().build(token=token,
-                                  station="06-00187",
+                                  sn="06-00187",
                                   start_time=yesterday).request is not None
 
 
 def test_readings_request():
     assert Session().send(ZentraReadings().build(token=token,
-                                                 station="06-00187",
+                                                 sn="06-00187",
                                                  start_time=yesterday).request).status_code == 200
 
 
 def test_readings_parse():
     assert ZentraReadings().build(token=token,
-                                  station="06-00187",
+                                  sn="06-00187",
                                   start_time=yesterday).parse().device_info['device_sn'] == "06-00187"
 
 
 def test_readings_get():
     assert ZentraReadings().get(token=token,
-                                station="06-00187",
+                                sn="06-00187",
                                 start_time=yesterday).device_info['device_sn'] == "06-00187"
 
 
@@ -181,7 +181,7 @@ def test_init_timeseries_record():
     assert str(type(ZentraTimeseriesRecord(Session().
                                            send(ZentraReadings().
                                                 build(token=token,
-                                                      station="06-00187",
+                                                      sn="06-00187",
                                                       start_time=yesterday).
                                                 request).
                                            json()['device']['timeseries'][0]).

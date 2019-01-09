@@ -125,10 +125,8 @@ readings.timeseries[[1]].records
 ```
 
 ## Development
-
-<!--
-### Setting up project
-Dependency and environment management is provided by [conda](https://conda.io/docs/) and is described in the [environment.yml] file.
+This project has been set up using PyScaffold 3.1. For details and usage
+information on PyScaffold see [https://pyscaffold.org/].
 
 First, clone this project and change into the project directory:
 
@@ -137,45 +135,23 @@ git clone https://github.com/mt-climate-office/Zentra-API
 cd Zentra-API
 ```
 
-To build the environment, [install conda](https://conda.io/docs/user-guide/install/index.html) and simply run this from your console:
-
-``` bash
-conda env create -f environment.yml -p envs/mesonet_db
-```
-
-To activate the environment, run:
+Then, to install the library and its dependencies into your current python environment, run:
 
 ```bash
-source activate envs/mesonet_db
-
-# # Windows
-# activate myenv
+python setup.py develop
 ```
-
-To deactivate:
-```bash
-source deactivate
-
-# # Windows
-# deactivate
-```
--->
 
 ### Testing
-This project uses [pytest](https://docs.pytest.org/en/latest/) for testing.
+This project uses [pytest](https://docs.pytest.org/en/latest/) for testing and coverage analysis.
 To test, from the project directory run:
 
 ```bash
 python setup.py test
 ```
 
-## Documentation
+### Documentation
 This project uses `pdoc` to auto-generate documentation from docstrings in the code. Documentation was generated using this command in the terminal:
 ```bash
 pdoc --html --html-dir docs --overwrite ./src/zentra/api.py
+mv -i docs/api.m.html docs/index.html
 ```
-
-### Scaffolding
-
-This project has been set up using PyScaffold 3.1. For details and usage
-information on PyScaffold see [https://pyscaffold.org/].

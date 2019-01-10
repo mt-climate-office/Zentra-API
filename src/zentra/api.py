@@ -520,7 +520,11 @@ class ZentraTimeseriesRecord:
 
         self.values = pd.concat(
             (vals >>
-             mutate(datetime=list(map(datetime.datetime.fromtimestamp, vals['datetime'].tolist()))) >>
+             mutate(datetime=list(map(datetime.datetime.fromtimestamp,
+                                      vals['datetime'].tolist()
+                                      )
+                                  )
+                    ) >>
              gather('port', 'values', columns_from(X['1'])) >>
              arrange(X.datetime, X.port)
              ).apply(lambda x: (x['values'] >>
@@ -528,8 +532,11 @@ class ZentraTimeseriesRecord:
                                        mrid=x['mrid'],
                                        unknown=x['unknown'],
                                        port=x['port']) >>
-                                select(X.datetime, X.mrid, X.unknown,
-                                       X.port, everything())
+                                select(X.datetime,
+                                       X.mrid,
+                                       X.unknown,
+                                       X.port,
+                                       everything())
                                 ),
                      axis=1).tolist()
         )

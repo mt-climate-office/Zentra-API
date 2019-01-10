@@ -1,5 +1,5 @@
 # Zentra-API
-The `zentra` library provides python bindings to the Zentra Cloud RESTful API.
+The `zentra` library provides python bindings to the Zentra Cloud RESTful API. [Read the docs here.](https://mt-climate-office.github.io/Zentra-API/)
 
 ## What is Zentra Cloud?
 [Zentra Cloud](https://www.metergroup.com/environment/zentra-cloud/) is a service of the [METER Group](https://www.metergroup.com/) for delivering data collected by METER data-loggers. The service allows logger owners to invite users to view and download their data. Zentra Cloud provides a graphical user interface as well as a [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) application programming interface (API). Authenticated users can access data through either interface.
@@ -28,7 +28,7 @@ Methods for `ZentraSettings`, `ZentraStatus`, and `ZentraReadings` classes all r
 After installation, load the `zentra` library with a standard import call to the `api` module:
 
 ```python
-from zentra.api import *
+import zentra.api
 ```
 
 ### `ZentraToken`
@@ -126,7 +126,7 @@ readings.timeseries[[1]].records
 
 ## Development
 This project has been set up using PyScaffold 3.1. For details and usage
-information on PyScaffold see [https://pyscaffold.org/].
+information on PyScaffold see https://pyscaffold.org/.
 
 First, clone this project and change into the project directory:
 
@@ -150,7 +150,7 @@ python setup.py test
 ```
 
 ### Documentation
-This project uses `pdoc` to auto-generate documentation from docstrings in the code. Documentation was generated using this command in the terminal:
+This project uses [`pdoc`](https://github.com/mitmproxy/pdoc) to auto-generate documentation from docstrings in the code. Documentation was generated using this command in the terminal:
 ```bash
 pdoc --html --html-dir docs --overwrite ./src/zentra/api.py
 mv -i docs/api.m.html docs/index.html

@@ -139,7 +139,7 @@ class ZentraSettings:
         start_time : int, optional
             Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return settings with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
 
@@ -171,7 +171,7 @@ class ZentraSettings:
         start_time : int, optional
             Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return settings with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
         self.build(sn, token, start_time, end_time)
@@ -192,7 +192,7 @@ class ZentraSettings:
         start_time : int, optional
             Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return settings with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
         self.request = Request('GET',
@@ -262,9 +262,9 @@ class ZentraStatus:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return status with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return status with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
 
@@ -294,9 +294,9 @@ class ZentraStatus:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return status with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return status with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
         self.build(sn, token, start_time, end_time)
@@ -315,9 +315,9 @@ class ZentraStatus:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return status with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
-            Return settings with timestamps <= end_time. Specify end_time in UTC seconds.
+            Return status with timestamps ≤ end_time. Specify end_time in UTC seconds.
 
         """
         self.request = Request('GET',
@@ -369,7 +369,7 @@ class ZentraReadings:
 
     """
 
-    def __init__(self, sn=None, token=None, start_time=None, start_mrid=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None, start_mrid=None, end_mrid=None):
         """
         Gets a device readings using a GET request to the Zentra API.
 
@@ -380,14 +380,18 @@ class ZentraReadings:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return readings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+        end_time : int, optional
+            Return readings with timestamps ≤ end_time. Specify end_time in UTC seconds.
         start_mrid : int, optional
             Return readings with mrid ≥ start_mrid.
+        end_mrid : int, optional
+            Return readings with mrid ≤ start_mrid.
 
         """
 
         if sn and token:
-            self.get(sn, token, start_time, start_mrid)
+            self.get(sn, token, start_time, end_time, start_mrid, end_mrid)
         elif sn or token:
             raise Exception(
                 '"sn" and "token" parameters must both be included.')
@@ -400,7 +404,7 @@ class ZentraReadings:
             self.locations = None
             self.installation_metadata = None
 
-    def get(self, sn, token, start_time=None, start_mrid=None):
+    def get(self, sn, token, start_time=None, end_time=None, start_mrid=None, end_mrid=None):
         """
         Gets a device readings using a GET request to the Zentra API.
         Wraps build and parse functions.
@@ -412,17 +416,21 @@ class ZentraReadings:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return readings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+        end_time : int, optional
+            Return readings with timestamps ≤ end_time. Specify end_time in UTC seconds.
         start_mrid : int, optional
             Return readings with mrid ≥ start_mrid.
+        end_mrid : int, optional
+            Return readings with mrid ≤ start_mrid.
 
         """
-        self.build(sn, token, start_time, start_mrid)
+        self.build(sn, token, start_time, end_time, start_mrid, end_mrid)
         self.parse()
 
         return self
 
-    def build(self, sn, token, start_time=None, start_mrid=None):
+    def build(self, sn, token, start_time=None, end_time=None, start_mrid=None, end_mrid=None):
         """
         Gets a device readings using a GET request to the Zentra API.
 
@@ -433,9 +441,13 @@ class ZentraReadings:
         token : ZentraToken
             The user's access token
         start_time : int, optional
-            Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+            Return readings with timestamps ≥ start_time. Specify start_time in UTC seconds.
+        end_time : int, optional
+            Return readings with timestamps ≤ end_time. Specify end_time in UTC seconds.
         start_mrid : int, optional
             Return readings with mrid ≥ start_mrid.
+        end_mrid : int, optional
+            Return readings with mrid ≤ start_mrid.
 
         """
         self.request = Request('GET',
@@ -444,7 +456,9 @@ class ZentraReadings:
                                    'Authorization': "Token " + token.token},
                                params={'sn': sn,
                                        'start_time': start_time,
-                                       'start_mrid': start_mrid}).prepare()
+                                       'end_time': end_time,
+                                       'start_mrid': start_mrid,
+                                       'end_mrid': end_mrid}).prepare()
 
         return self
 
@@ -508,7 +522,7 @@ class ZentraTimeseriesRecord:
 
         vals.columns = \
             (
-                ['datetime', 'mrid', 'unknown'] +
+                ['datetime', 'mrid', 'rssi'] +
                 list(
                     str(s)
                     for s
@@ -530,11 +544,11 @@ class ZentraTimeseriesRecord:
              ).apply(lambda x: (x['values'] >>
                                 mutate(datetime=x['datetime'],
                                        mrid=x['mrid'],
-                                       unknown=x['unknown'],
+                                       rssi=x['rssi'],
                                        port=x['port']) >>
                                 select(X.datetime,
                                        X.mrid,
-                                       X.unknown,
+                                       X.rssi,
                                        X.port,
                                        everything())
                                 ),

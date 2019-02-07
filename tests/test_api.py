@@ -177,6 +177,13 @@ def test_readings_get():
                                 start_time=yesterday).device_info['device_sn'] == "06-00187"
 
 
+def test_readings_get_mrid_range():
+    assert ZentraReadings().get(token=token,
+                                sn="06-00761",
+                                start_mrid=28350,
+                                end_mrid=28350).device_info['device_sn'] == "06-00761"
+
+
 def test_init_timeseries_record():
     assert str(type(ZentraTimeseriesRecord(Session().
                                            send(ZentraReadings().

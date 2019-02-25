@@ -14,6 +14,7 @@ from requests import Session, Request
 import pandas as pd
 from dfply import *
 import datetime
+import json
 
 
 class ZentraToken:
@@ -24,12 +25,14 @@ class ZentraToken:
     ----------
     request : Request
         a Request object defining the request made to the Zentra server
+    response : Response
+        a json response from the Zentra server
     token : str
         a string providing the user's access token
 
     """
 
-    def __init__(self, username=None, password=None, token=None):
+    def __init__(self, username=None, password=None, token=None, json_file=None):
         """
         Gets a user token using a POST request to the Zentra API.
 
@@ -39,18 +42,26 @@ class ZentraToken:
             The username
         password : str, optional
             The password
+        json_file : str, optional
+            The path to a local json file to parse.
 
         """
         self.request = None
+        self.response = None
         self.token = None
 
         if token:
             self.token = token
 
-        if username:
-            self.build(username, password)
+        elif username and password:
+            self.get(username, password)
+
+        elif json_file:
+            self.response = json.load(open(json_file))
+            self.parse()
 
         if self.request and not self.token:
+            self.make_request()
             self.parse()
 
     def get(self, username, password):
@@ -67,6 +78,7 @@ class ZentraToken:
 
         """
         self.build(username, password)
+        self.make_request()
         self.parse()
 
         return self
@@ -90,16 +102,22 @@ class ZentraToken:
 
         return self
 
-    def parse(self):
+    def make_request(self):
         """
         Sends a token request to the Zentra API and parses the response.
         """
         # Send the request and get the JSON response
-        resp = Session().send(self.request). \
+        self.response = Session().send(self.request). \
             json()
 
+        return self
+
+    def parse(self):
+        """
+        Parses the response.
+        """
         # parse the respons
-        self.token = resp. \
+        self.token = self.response. \
             get('token')
 
         return self
@@ -113,6 +131,8 @@ class ZentraSettings:
     ----------
     request : Request
         a Request object defining the request made to the Zentra server
+    response : Response
+        a json response from the Zentra server
     device_info : dict
         a dictionary providing the device info
     measurement_settings : pd.DataFrame
@@ -126,7 +146,7 @@ class ZentraSettings:
 
     """
 
-    def __init__(self, sn=None, token=None, start_time=None, end_time=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None, json_file=None):
         """
         Gets a device settings using a GET request to the Zentra API.
 
@@ -140,10 +160,15 @@ class ZentraSettings:
             Return settings with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
             Return settings with timestamps ≤ end_time. Specify end_time in UTC seconds.
+        json_file : str, optional
+            The path to a local json file to parse.
 
         """
 
-        if sn and token:
+        if json_file:
+            self.response = json.load(open(json_file))
+            self.parse()
+        elif sn and token:
             self.get(sn, token, start_time, end_time)
         elif sn or token:
             raise Exception(
@@ -151,6 +176,7 @@ class ZentraSettings:
         else:
             # build an empty ZentraToken
             self.request = None
+            self.response = None
             self.device_info = None
             self.measurement_settings = None
             self.time_settings = None
@@ -175,6 +201,7 @@ class ZentraSettings:
 
         """
         self.build(sn, token, start_time, end_time)
+        self.make_request()
         self.parse()
 
         return self
@@ -205,9 +232,9 @@ class ZentraSettings:
 
         return self
 
-    def parse(self):
+    def make_request(self):
         """
-        Sends a token request to the Zentra API and parses the response.
+        Sends a token request to the Zentra API and stores the response.
         """
         # Send the request and get the JSON response
         resp = Session().send(self.request)
@@ -215,19 +242,26 @@ class ZentraSettings:
             raise Exception(
                 'Incorrectly formatted request. Please ensure the user token and device serial number are correct.')
 
-        resp = resp.json()
+        self.response = resp.json()
 
+        return self
+
+    def parse(self):
+        """
+        Parses the response.
+        """
         # parse the response
-        self.device_info = resp['device']['device_info']
+        self.device_info = self.response['device']['device_info']
         self.measurement_settings = pd.DataFrame(
-            resp['device']['measurement_settings'])
-        self.time_settings = pd.DataFrame(resp['device']['time_settings'])
-        self.locations = pd.DataFrame(resp['device']['locations'])
-        resp['device']['installation_metadata'] = resp['device']['installation_metadata'][0]
-        resp['device']['installation_metadata']['sensor_elevations'] = \
-            pd.DataFrame(resp['device']['installation_metadata']
+            self.response['device']['measurement_settings'])
+        self.time_settings = pd.DataFrame(
+            self.response['device']['time_settings'])
+        self.locations = pd.DataFrame(self.response['device']['locations'])
+        self.response['device']['installation_metadata'] = self.response['device']['installation_metadata'][0]
+        self.response['device']['installation_metadata']['sensor_elevations'] = \
+            pd.DataFrame(self.response['device']['installation_metadata']
                          ['sensor_elevations'])
-        self.installation_metadata = resp['device']['installation_metadata']
+        self.installation_metadata = self.response['device']['installation_metadata']
 
         return self
 
@@ -240,6 +274,8 @@ class ZentraStatus:
     ----------
     request : Request
         a Request object defining the request made to the Zentra server
+    response : Response
+        a json response from the Zentra server
     device_info : dict
         a dictionary providing the device info
     device_error_counters : dict
@@ -251,7 +287,7 @@ class ZentraStatus:
 
     """
 
-    def __init__(self, sn=None, token=None, start_time=None, end_time=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None, json_file=None):
         """
         Gets a device status using a GET request to the Zentra API.
 
@@ -265,10 +301,15 @@ class ZentraStatus:
             Return status with timestamps ≥ start_time. Specify start_time in UTC seconds.
         end_time : int, optional
             Return status with timestamps ≤ end_time. Specify end_time in UTC seconds.
+        json_file : str, optional
+            The path to a local json file to parse.
 
         """
 
-        if sn and token:
+        if json_file:
+            self.response = json.load(open(json_file))
+            self.parse()
+        elif sn and token:
             self.get(sn, token, start_time, end_time)
         elif sn or token:
             raise Exception(
@@ -276,6 +317,7 @@ class ZentraStatus:
         else:
             # build an empty ZentraToken
             self.request = None
+            self.response = None
             self.device_info = None
             self.measurement_settings = None
             self.time_settings = None
@@ -300,6 +342,7 @@ class ZentraStatus:
 
         """
         self.build(sn, token, start_time, end_time)
+        self.make_request()
         self.parse()
 
         return self
@@ -330,9 +373,9 @@ class ZentraStatus:
 
         return self
 
-    def parse(self):
+    def make_request(self):
         """
-        Sends a token request to the Zentra API and parses the response.
+        Sends a token request to the Zentra API and stores the response.
         """
         # Send the request and get the JSON response
         resp = Session().send(self.request)
@@ -340,16 +383,21 @@ class ZentraStatus:
             raise Exception(
                 'Incorrectly formatted request. Please ensure the user token and device serial number are correct.')
 
-        resp = resp.json()
+        self.response = resp.json()
 
-        # parse the response
-        self.device_info = resp['device']['device_info']
-        resp['device']['device_error_counters']['sensor_errors'] = pd.DataFrame(
-            resp['device']['device_error_counters']['sensor_errors'])
-        self.device_error_counters = resp['device']['device_error_counters']
+        return self
+
+    def parse(self):
+        """
+        Parses the response.
+        """
+        self.device_info = self.response['device']['device_info']
+        self.response['device']['device_error_counters']['sensor_errors'] = pd.DataFrame(
+            self.response['device']['device_error_counters']['sensor_errors'])
+        self.device_error_counters = self.response['device']['device_error_counters']
         self.cellular_statuses = pd.DataFrame(
-            resp['device']['cellular_statuses'])
-        self.cellular_error_counters = resp['device']['cellular_error_counters']
+            self.response['device']['cellular_statuses'])
+        self.cellular_error_counters = self.response['device']['cellular_error_counters']
 
         return self
 
@@ -362,6 +410,8 @@ class ZentraReadings:
     ----------
     request : Request
         a Request object defining the request made to the Zentra server
+    response : Response
+        a json response from the Zentra server
     device_info : dict
         a dictionary providing the device info
     timeseries : list
@@ -369,7 +419,7 @@ class ZentraReadings:
 
     """
 
-    def __init__(self, sn=None, token=None, start_time=None, end_time=None, start_mrid=None, end_mrid=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None, start_mrid=None, end_mrid=None, json_file=None):
         """
         Gets a device readings using a GET request to the Zentra API.
 
@@ -387,10 +437,14 @@ class ZentraReadings:
             Return readings with mrid ≥ start_mrid.
         end_mrid : int, optional
             Return readings with mrid ≤ start_mrid.
+        json_file : str, optional
+            The path to a local json file to parse.
 
         """
-
-        if sn and token:
+        if json_file:
+            self.response = json.load(open(json_file))
+            self.parse()
+        elif sn and token:
             self.get(sn, token, start_time, end_time, start_mrid, end_mrid)
         elif sn or token:
             raise Exception(
@@ -398,6 +452,7 @@ class ZentraReadings:
         else:
             # build an empty ZentraToken
             self.request = None
+            self.response = None
             self.device_info = None
             self.measurement_settings = None
             self.time_settings = None
@@ -426,6 +481,7 @@ class ZentraReadings:
 
         """
         self.build(sn, token, start_time, end_time, start_mrid, end_mrid)
+        self.make_request()
         self.parse()
 
         return self
@@ -462,9 +518,9 @@ class ZentraReadings:
 
         return self
 
-    def parse(self):
+    def make_request(self):
         """
-        Sends a token request to the Zentra API and parses the response.
+        Sends a token request to the Zentra API and stores the response.
         """
         # Send the request and get the JSON response
         resp = Session().send(self.request)
@@ -475,12 +531,17 @@ class ZentraReadings:
             raise Exception(
                 'Error: Device serial number entered does not exist')
 
-        resp = resp.json()
+        self.response = resp.json()
 
-        # parse the response
-        self.device_info = resp['device']['device_info']
+        return self
+
+    def parse(self):
+        """
+        Parses the response.
+        """
+        self.device_info = self.response['device']['device_info']
         self.timeseries = list(
-            map(lambda x: ZentraTimeseriesRecord(x), resp['device']['timeseries']))
+            map(lambda x: ZentraTimeseriesRecord(x), self.response['device']['timeseries']))
 
         return self
 

@@ -30,7 +30,7 @@ def test_token_request():
 
 def test_token_parse():
     assert ZentraToken().build(username=getenv("zentra_un"),
-                               password=getenv("zentra_pw")).parse().token == getenv("zentra_token")
+                               password=getenv("zentra_pw")).make_request().parse().token == getenv("zentra_token")
 
 
 def test_token_get():
@@ -73,7 +73,7 @@ def test_settings_request():
 
 def test_settings_parse():
     assert ZentraSettings().build(token=token,
-                                  sn="06-00187").parse().device_info['device_sn'] == "06-00187"
+                                  sn="06-00187").make_request().parse().device_info['device_sn'] == "06-00187"
 
 
 def test_settings_get():
@@ -113,7 +113,7 @@ def test_status_request():
 
 def test_status_parse():
     assert ZentraStatus().build(token=token,
-                                sn="06-00187").parse().device_info['device_sn'] == "06-00187"
+                                sn="06-00187").make_request().parse().device_info['device_sn'] == "06-00187"
 
 
 def test_status_get():
@@ -168,7 +168,7 @@ def test_readings_request():
 def test_readings_parse():
     assert ZentraReadings().build(token=token,
                                   sn="06-00187",
-                                  start_time=yesterday).parse().device_info['device_sn'] == "06-00187"
+                                  start_time=yesterday).make_request().parse().device_info['device_sn'] == "06-00187"
 
 
 def test_readings_get():

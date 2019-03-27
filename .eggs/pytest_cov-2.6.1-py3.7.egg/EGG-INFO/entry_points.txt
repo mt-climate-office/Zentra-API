@@ -1,0 +1,5 @@
+[console_scripts]
+
+
+[pytest11]
+pytest_cov = pytest_cov.plugin

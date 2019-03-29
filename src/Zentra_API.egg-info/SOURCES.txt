@@ -475,6 +475,7 @@ setup.py
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/libraries/R_User_Library.xml
+dist/Zentra_API-0.0.post0.dev54+g764d0ba.dirty-py3.7.egg
 docs/index.html
 src/Zentra_API.egg-info/PKG-INFO
 src/Zentra_API.egg-info/SOURCES.txt

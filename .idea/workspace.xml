@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65691e0f-faf5-4700-987a-373ff5b9c4bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/zentra/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/zentra/api.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/zentra/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="503">
-              <caret line="597" column="72" selection-start-line="597" selection-start-column="72" selection-end-line="597" selection-end-column="72" />
+            <state relative-caret-position="423">
+              <caret line="599" column="56" selection-end-line="615" />
               <folding>
                 <element signature="e#439#476#0" expanded="true" />
               </folding>
@@ -209,12 +208,12 @@
       <workItem from="1551137826724" duration="102000" />
       <workItem from="1553623734778" duration="584000" />
       <workItem from="1553811404941" duration="685000" />
-      <workItem from="1553876791137" duration="430000" />
+      <workItem from="1553876791137" duration="908000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37140000" />
+    <option name="totallyTimeSpent" value="37618000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -321,8 +320,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/zentra/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="597" column="72" selection-start-line="597" selection-start-column="72" selection-end-line="597" selection-end-column="72" />
+        <state relative-caret-position="423">
+          <caret line="599" column="56" selection-end-line="615" />
           <folding>
             <element signature="e#439#476#0" expanded="true" />
           </folding>

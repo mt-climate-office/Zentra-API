@@ -419,7 +419,8 @@ class ZentraReadings:
 
     """
 
-    def __init__(self, sn=None, token=None, start_time=None, end_time=None, start_mrid=None, end_mrid=None, json_file=None):
+    def __init__(self, sn=None, token=None, start_time=None, end_time=None, start_mrid=None, end_mrid=None,
+                 json_file=None):
         """
         Gets a device readings using a GET request to the Zentra API.
 
@@ -595,11 +596,8 @@ class ZentraTimeseriesRecord:
 
         self.values = pd.concat(
             (vals >>
-             mutate(datetime=list(map(datetime.datetime.utcfromtimestamp,
-                                      vals['datetime'].tolist()
-                                      )
-                                  )
-                    ) >>
+             mutate(datetime=[datetime.datetime.fromtimestamp(x, datetime.timezone.utc) for x in
+                              vals['datetime'].tolist()]) >>
              gather('port', 'values', columns_from(X['1'])) >>
              arrange(X.datetime, X.port)
              ).apply(lambda x: (x['values'] >>

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Zentra-API
-Version: 0.0.post0.dev52+g84524a1.dirty
+Version: 0.0.post0.dev54+g764d0ba.dirty
 Summary: Python bindings to the Zentra Cloud REST API
 Home-page: https://climate.umt.edu/
 Author: R. Kyle Bocinsky

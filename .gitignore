@@ -3,3 +3,11 @@ Icon?
 # Mac trash
 .DS_Store
 Icon
+# Python package files
+.idea
+.eggs
+build
+*.egg-info
+__pycache__
+.pytest_cache
+dist

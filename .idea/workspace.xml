@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65691e0f-faf5-4700-987a-373ff5b9c4bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/zentra/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/zentra/api.py" afterDir="false" />
-    </list>
+    <list default="true" id="65691e0f-faf5-4700-987a-373ff5b9c4bd" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/zentra/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="599" column="56" selection-end-line="615" />
+            <state relative-caret-position="476">
+              <caret line="601" column="40" selection-start-line="601" selection-start-column="40" selection-end-line="601" selection-end-column="40" />
               <folding>
                 <element signature="e#439#476#0" expanded="true" />
               </folding>
@@ -100,10 +98,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="977" />
+    <option name="height" value="982" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -208,16 +206,15 @@
       <workItem from="1551137826724" duration="102000" />
       <workItem from="1553623734778" duration="584000" />
       <workItem from="1553811404941" duration="685000" />
-      <workItem from="1553876791137" duration="908000" />
+      <workItem from="1553876791137" duration="1231000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37618000" />
+    <option name="totallyTimeSpent" value="37941000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1680" height="982" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2973138" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -232,8 +229,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.2936508" side_tool="true" visible="true" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.7063492" visible="true" weight="0.32959184" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.2936508" side_tool="true" visible="true" weight="0.36292136" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.7063492" visible="true" weight="0.36292136" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.496337" weight="0.3299435" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -320,8 +317,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/zentra/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="599" column="56" selection-end-line="615" />
+        <state relative-caret-position="476">
+          <caret line="601" column="40" selection-start-line="601" selection-start-column="40" selection-end-line="601" selection-end-column="40" />
           <folding>
             <element signature="e#439#476#0" expanded="true" />
           </folding>

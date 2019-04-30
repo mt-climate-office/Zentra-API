@@ -1,4 +1,4 @@
-# Zentra-API
+# Zentra API
 The `zentra` library provides python bindings to the Zentra Cloud RESTful API. [Read the docs here.](https://mt-climate-office.github.io/Zentra-API/)
 
 ## What is Zentra Cloud?

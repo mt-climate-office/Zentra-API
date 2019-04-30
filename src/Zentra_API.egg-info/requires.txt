@@ -1,9 +1,0 @@
-numpy>=1.15
-pandas>=0.23
-requests>=2.20
-dfply>=0.3
-pre-commit>=1.12
-
-[testing]
-pytest
-pytest-cov

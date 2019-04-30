@@ -4,7 +4,6 @@ Icon?
 .DS_Store
 Icon
 # Python package files
-.idea
 .eggs
 build
 *.egg-info

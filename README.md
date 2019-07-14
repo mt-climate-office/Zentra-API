@@ -116,11 +116,11 @@ status.cellular_statuses
 # Get the readings for a device
 readings = ZentraReadings(sn="06-00761",
                           token=token,
-                          start_time=int(datetime.datetime(year=2018,
-                                                           month=12,
-                                                           day=31).timestamp()))
+                          start_time=int(datetime.datetime(year=2019,
+                                                           month=7,
+                                                           day=4).timestamp()))
 # Report the readings from the first ZentraTimeseriesRecord
-readings.timeseries[[1]].records
+readings.timeseries[0].values
 
 ```
 

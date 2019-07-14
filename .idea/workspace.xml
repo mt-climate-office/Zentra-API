@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65691e0f-faf5-4700-987a-373ff5b9c4bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.coverage" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,8 +67,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="241">
-                <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+              <first_editor relative-caret-position="375">
+                <caret line="148" selection-start-line="148" selection-end-line="148" selection-end-column="20" />
                 <folding>
                   <element signature="e#0#24#0" expanded="true" />
                 </folding>
@@ -225,18 +225,18 @@
       <workItem from="1553623734778" duration="584000" />
       <workItem from="1553811404941" duration="685000" />
       <workItem from="1553876791137" duration="1231000" />
-      <workItem from="1563132814403" duration="441000" />
+      <workItem from="1563132814403" duration="588000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38382000" />
+    <option name="totallyTimeSpent" value="38529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3009768" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3009768" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -251,7 +251,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.34310135" side_tool="true" visible="true" weight="0.32959184" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.7057387" weight="0.3622449" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.6568987" visible="true" weight="0.32959184" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.6568987" visible="true" weight="0.32959184" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -332,8 +332,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="241">
-            <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+          <first_editor relative-caret-position="375">
+            <caret line="148" selection-start-line="148" selection-end-line="148" selection-end-column="20" />
             <folding>
               <element signature="e#0#24#0" expanded="true" />
             </folding>
